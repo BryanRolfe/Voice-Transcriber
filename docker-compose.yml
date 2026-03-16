@@ -1,0 +1,19 @@
+services:
+  transcriber:
+    build: .
+    container_name: transcriber
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+    volumes:
+      - transcriber-data:/data
+    environment:
+      - UPLOAD_FOLDER=/data/uploads
+      - DB_PATH=/data/transcriber.db
+      - HF_TOKEN=${HF_TOKEN:-}
+      - WEBHOOK_URL=${WEBHOOK_URL:-}
+      - APP_PASSWORD=${APP_PASSWORD:-}
+      - SECRET_KEY=${SECRET_KEY:-}
+
+volumes:
+  transcriber-data:

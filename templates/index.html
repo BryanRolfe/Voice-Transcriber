@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Transcriber">
+    <meta name="theme-color" content="#111111">
+    <title>Transcriber</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192.png">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="scroll-wrapper">
+    <header>
+        <h1>🎙️ Transcriber</h1>
+    </header>
+
+    <div class="ptr-indicator" id="ptr-indicator">
+        <span class="ptr-spinner"></span>
+        <span class="ptr-text">Pull to refresh</span>
+    </div>
+
+    <main>
+        <!-- Upload Section -->
+        <section id="upload-section" class="card">
+            <h2>Upload Recording</h2>
+            <div class="model-selector">
+                <label for="model-select">Model:</label>
+                <select id="model-select"></select>
+            </div>
+            <div class="option-row" id="diarize-option" style="display:none">
+                <label class="toggle-label">
+                    <input type="checkbox" id="diarize-toggle">
+                    <span class="toggle-switch"></span>
+                    <span>Identify speakers</span>
+                </label>
+            </div>
+            <div class="option-row" id="notify-option" style="display:none">
+                <label class="toggle-label">
+                    <input type="checkbox" id="notify-toggle">
+                    <span class="toggle-switch"></span>
+                    <span>Progress notifications</span>
+                </label>
+            </div>
+            <div id="drop-zone">
+                <input type="file" id="file-input" accept="audio/*,video/*,.wav,.mp3,.ogg,.m4a,.flac,.webm,.mp4,.aac,.wma,.qta" multiple hidden>
+                <div id="drop-content">
+                    <span class="drop-icon">📁</span>
+                    <p>Tap to select or drag & drop</p>
+                    <p class="hint">WAV, MP3, M4A, OGG, FLAC, WebM, AAC, QTA</p>
+                </div>
+                <div id="upload-progress" class="hidden">
+                    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+                    <p id="upload-status">Uploading...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recordings -->
+        <section id="recordings-section">
+            <div class="section-header">
+                <h2>Recordings</h2>
+                <div class="section-actions">
+                    <button id="select-btn" class="icon-btn" title="Select">☑️</button>
+                    <button id="refresh-btn" class="icon-btn" title="Refresh">🔄</button>
+                    <button id="retranscribe-all-btn" class="icon-btn" title="Re-transcribe all">✨</button>
+                </div>
+            </div>
+            <div id="recordings-list">
+                <p class="empty-state">Loading...</p>
+            </div>
+            <div id="batch-bar" class="batch-bar hidden">
+                <span><span id="batch-count">0</span> selected</span>
+                <div class="batch-actions">
+                    <button id="batch-retranscribe" class="btn">✨ Re-transcribe</button>
+                    <button id="batch-delete" class="btn btn-danger">🗑️ Delete</button>
+                </div>
+            </div>
+        </section>
+    </main>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

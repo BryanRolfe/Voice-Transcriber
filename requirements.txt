@@ -1,0 +1,4 @@
+flask>=3.0
+faster-whisper>=1.0.0
+gunicorn>=21.2
+pyannote.audio>=3.1
